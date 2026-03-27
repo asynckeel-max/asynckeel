@@ -8,3 +8,4 @@ bcrypt
 alembic
 pytest
 httpx
+pydantic-settings==2.0.0
