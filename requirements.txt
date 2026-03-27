@@ -1,0 +1,9 @@
+FastAPI
+SQLAlchemy
+psycopg2-binary
+python-dotenv
+pydantic
+pyjwt
+bcrypt
+alembic
+pytest
