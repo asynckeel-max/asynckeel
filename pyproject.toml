@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.black]
+line-length = 88
+
+[tool.isort]
+profile = "black"
+
+[metadata]
+name = "your_project_name"
+version = "0.1.0"
+authors = ["Your Name <your.email@example.com>"]
+description = "A brief description of your project"
+readme = "README.md"
+license = "MIT"
+homepage = "https://your.project.homepage"
+repository = "https://github.com/asynckeel-max/asynckeel"
+keywords = ["keyword1", "keyword2"]
