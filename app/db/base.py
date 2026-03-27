@@ -1,0 +1,1 @@
+from sqlalchemy.ext.declarative import declarative_base\n\n# Create a SQLAlchemy declarative base for ORM models\nBase = declarative_base()\n
