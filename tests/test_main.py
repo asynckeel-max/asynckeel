@@ -1,12 +1,21 @@
 import pytest
 from fastapi.testclient import TestClient
-from your_application import app  # Replace with the actual import for your FastAPI application
+from app.main import app
 
 client = TestClient(app)
 
-def test_read_main():
-    response = client.get("")
+def test_read_root():
+    """Test root endpoint returns Hello World"""
+    response = client.get("/")
     assert response.status_code == 200
-    assert response.json() == {"message": "Hello, World!"}  # Adjust according to your actual response
+    assert response.json() == {"Hello": "World"}
 
-# Add more tests for other endpoints
+def test_root_endpoint_exists():
+    """Test root endpoint is accessible"""
+    response = client.get("/")
+    assert response.status_code == 200
+
+def test_invalid_endpoint():
+    """Test invalid endpoint returns 404"""
+    response = client.get("/invalid-endpoint")
+    assert response.status_code == 404
