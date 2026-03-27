@@ -1,0 +1,1 @@
+[flake8]\nmax-line-length = 88\nignore = E203, E266, E501, W503\nselect = B,C,E,F,W,T4\n
