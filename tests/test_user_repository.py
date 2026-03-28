@@ -17,6 +17,7 @@ def test_db():
     db = TestingSessionLocal()
     yield db
     db.close()
+    Base.metadata.drop_all(bind=engine)
 
 def test_create_user(test_db):
     """Test creating a user"""
@@ -42,3 +43,8 @@ def test_get_user_by_username(test_db):
     user = UserRepository.get_user_by_username(test_db, "testuser")
     assert user is not None
     assert user.username == "testuser"
+
+def test_get_all_users(test_db):
+    """Test getting all users"""
+    users = UserRepository.get_all_users(test_db)
+    assert isinstance(users, list)
