@@ -1,6 +1,8 @@
 from sqlalchemy.orm import Session
+
 from app.models.user import User
 from app.schemas.user import UserCreate
+
 
 class UserRepository:
     """Repository for User database operations"""
@@ -27,7 +29,7 @@ class UserRepository:
             username=user.username,
             email=user.email,
             full_name=user.full_name,
-            hashed_password=hashed_password
+            hashed_password=hashed_password,
         )
         db.add(db_user)
         db.commit()

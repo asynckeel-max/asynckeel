@@ -1,8 +1,10 @@
 from sqlalchemy.orm import Session
-from app.repositories.user import UserRepository
-from app.schemas.user import UserCreate
+
 from app.core.exceptions import UserAlreadyExistsException, UserNotFoundException
 from app.core.security import hash_password
+from app.repositories.user import UserRepository
+from app.schemas.user import UserCreate
+
 
 class UserService:
     """Service for user business logic"""
