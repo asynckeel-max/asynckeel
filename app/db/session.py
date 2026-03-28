@@ -1,19 +1,19 @@
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, Session
+from app.core.config import settings
 
 # Database configuration
-DATABASE_URL = "sqlite:///./test.db"  # Example: Change this to your actual database URL
+DATABASE_URL = "sqlite:///./asynckeel.db"
 
-# Create a new SQLAlchemy engine instance
-engine = create_engine(DATABASE_URL, connect_args={{"check_same_thread": False}})
+engine = create_engine(
+    DATABASE_URL,
+    connect_args={"check_same_thread": False}
+)
 
-# Create a configured "Session" class
-t SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-
-# Create a session
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 def get_db():
-    # Dependency
+    """Get database session"""
     db = SessionLocal()
     try:
         yield db
