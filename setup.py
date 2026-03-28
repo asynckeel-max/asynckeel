@@ -1,23 +1,21 @@
 from setuptools import find_packages, setup
 
 setup(
-    name="your_package_name",  # Replace with your package name
-    version="0.1.0",  # Replace with the initial version
-    author="Your Name",  # Replace with the author's name
-    author_email="your_email@example.com",  # Replace with the author's email
-    description="A brief description of the package",  # Replace with a short description
-    long_description=open("README.md").read(),  # Assumes you have a README.md file
-    long_description_content_type="text/markdown",
-    url="https://github.com/asynckeel-max/asynckeel",  # Replace with the URL of the project
+    name="asynckeel",
+    version="0.1.0",
+    description="Async Keel - Advanced async framework",
+    author="AsyncKeel",
+    author_email="asynckeel@gmail.com",
     packages=find_packages(),
-    classifiers=[
-        "Programming Language :: Python :: 3",
-        "License :: OSI Approved :: MIT License",  # Replace with the appropriate license
-        "Operating System :: OS Independent",
-    ],
-    python_requires=">=3.6",  # Replace with the required Python version
+    python_requires=">=3.9",
     install_requires=[
-        "dependency1",  # Replace with your package dependencies
-        "dependency2",  # Replace with your package dependencies
+        "fastapi==0.109.0",
+        "uvicorn[standard]==0.27.0",
+        "sqlalchemy==2.0.23",
+        "pydantic==2.5.0",
+        "pydantic-settings==2.1.0",
+        "email-validator==2.1.0",
+        "passlib[bcrypt]==1.7.4",
+        "bcrypt==4.1.1",
     ],
 )

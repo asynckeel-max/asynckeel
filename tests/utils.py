@@ -1,7 +1,5 @@
 # Test Utility Functions
 
-# This file contains utility functions and helpers for testing.
-
 
 def assert_equal(a, b):
     """Asserts that two values are equal."""
@@ -15,11 +13,8 @@ def assert_raises(exception_type, func, *args, **kwargs):
     except exception_type:
         return
     except Exception as e:
-        raise AssertionError(
-            f"Expected {exception_type} but got {type(e).__name__}"
-        ) from e
+        msg = f"Expected {exception_type} but got {type(e).__name__}"
+        raise AssertionError(msg) from e
     else:
-        raise AssertionError(f"Expected {exception_type} but no exception was raised")
-
-
-# Add more utility functions and helpers as needed.
+        msg = f"Expected {exception_type} but no exception was raised"
+        raise AssertionError(msg)

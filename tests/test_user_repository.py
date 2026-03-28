@@ -3,7 +3,6 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 from app.db.base import Base
-from app.models.user import User
 from app.repositories.user import UserRepository
 from app.schemas.user import UserCreate
 
