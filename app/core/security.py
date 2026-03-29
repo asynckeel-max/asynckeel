@@ -1,9 +1,17 @@
 import hashlib
+from datetime import datetime, timedelta
+from typing import Optional
 
 from passlib.context import CryptContext
+from pydantic import BaseModel
 
-# Password hashing context
+# Password hashing
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
+# JWT Configuration
+SECRET_KEY = "your-secret-key-change-in-production"
+ALGORITHM = "HS256"
+ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
 
 def hash_password(password: str) -> str:
@@ -19,3 +27,39 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
 def get_password_hash(password: str) -> str:
     """Get hash of a password"""
     return hashlib.sha256(password.encode()).hexdigest()
+
+
+class TokenData(BaseModel):
+    """Token data schema"""
+
+    username: Optional[str] = None
+
+
+def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
+    """Create JWT access token"""
+    from jose import jwt
+
+    to_encode = data.copy()
+    if expires_delta:
+        expire = datetime.utcnow() + expires_delta
+    else:
+        expire = datetime.utcnow() + timedelta(
+            minutes=ACCESS_TOKEN_EXPIRE_MINUTES
+        )
+    to_encode.update({"exp": expire})
+    encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+    return encoded_jwt
+
+
+def decode_token(token: str):
+    """Decode JWT token"""
+    from jose import jwt, JWTError
+
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        username: str = payload.get("sub")
+        if username is None:
+            return None
+        return TokenData(username=username)
+    except JWTError:
+        return None
