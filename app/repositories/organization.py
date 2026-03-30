@@ -11,24 +11,16 @@ class OrganizationRepository:
         db: Session, name: str, description: str | None, owner_id: int
     ) -> Organization:
         """Create a new organization"""
-        org = Organization(
-            name=name, description=description, owner_id=owner_id
-        )
+        org = Organization(name=name, description=description, owner_id=owner_id)
         db.add(org)
         db.commit()
         db.refresh(org)
         return org
 
     @staticmethod
-    def get_organization_by_id(
-        db: Session, org_id: int
-    ) -> Organization | None:
+    def get_organization_by_id(db: Session, org_id: int) -> Organization | None:
         """Get organization by ID"""
-        return (
-            db.query(Organization)
-            .filter(Organization.id == org_id)
-            .first()
-        )
+        return db.query(Organization).filter(Organization.id == org_id).first()
 
     @staticmethod
     def get_organizations_by_owner(
@@ -45,15 +37,13 @@ class OrganizationRepository:
 
     @staticmethod
     def update_organization(
-        db: Session, org_id: int, name: str | None = None,
-        description: str | None = None
+        db: Session,
+        org_id: int,
+        name: str | None = None,
+        description: str | None = None,
     ) -> Organization | None:
         """Update organization"""
-        org = (
-            db.query(Organization)
-            .filter(Organization.id == org_id)
-            .first()
-        )
+        org = db.query(Organization).filter(Organization.id == org_id).first()
         if not org:
             return None
         if name:
@@ -67,11 +57,7 @@ class OrganizationRepository:
     @staticmethod
     def delete_organization(db: Session, org_id: int) -> bool:
         """Delete organization"""
-        org = (
-            db.query(Organization)
-            .filter(Organization.id == org_id)
-            .first()
-        )
+        org = db.query(Organization).filter(Organization.id == org_id).first()
         if not org:
             return False
         db.delete(org)
@@ -83,9 +69,4 @@ class OrganizationRepository:
         db: Session, skip: int = 0, limit: int = 10
     ) -> list[Organization]:
         """Get all organizations"""
-        return (
-            db.query(Organization)
-            .offset(skip)
-            .limit(limit)
-            .all()
-        )
+        return db.query(Organization).offset(skip).limit(limit).all()

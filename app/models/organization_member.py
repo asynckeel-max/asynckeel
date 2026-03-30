@@ -1,6 +1,8 @@
 from enum import Enum
 
-from sqlalchemy import Column, DateTime, Enum as SQLEnum, ForeignKey, Integer
+from sqlalchemy import Column, DateTime
+from sqlalchemy import Enum as SQLEnum
+from sqlalchemy import ForeignKey, Integer
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 
@@ -22,9 +24,7 @@ class OrganizationMember(Base):
     __tablename__ = "organization_members"
 
     id = Column(Integer, primary_key=True, index=True)
-    organization_id = Column(
-        Integer, ForeignKey("organizations.id"), nullable=False
-    )
+    organization_id = Column(Integer, ForeignKey("organizations.id"), nullable=False)
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     role = Column(
         SQLEnum(RoleEnum),
@@ -36,9 +36,7 @@ class OrganizationMember(Base):
     )
 
     # Relationships
-    organization = relationship(
-        "Organization", back_populates="members"
-    )
+    organization = relationship("Organization", back_populates="members")
     user = relationship("User", back_populates="org_memberships")
 
     def __repr__(self):

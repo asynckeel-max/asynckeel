@@ -51,9 +51,7 @@ class OrganizationMemberRepository:
         )
 
     @staticmethod
-    def get_user_organizations(
-        db: Session, user_id: int
-    ) -> list[OrganizationMember]:
+    def get_user_organizations(db: Session, user_id: int) -> list[OrganizationMember]:
         """Get all organizations a user belongs to"""
         return (
             db.query(OrganizationMember)
@@ -85,9 +83,7 @@ class OrganizationMemberRepository:
         return member
 
     @staticmethod
-    def remove_member(
-        db: Session, organization_id: int, user_id: int
-    ) -> bool:
+    def remove_member(db: Session, organization_id: int, user_id: int) -> bool:
         """Remove member from organization"""
         member = (
             db.query(OrganizationMember)

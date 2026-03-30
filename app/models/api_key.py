@@ -18,9 +18,7 @@ class ApiKey(Base):
     __tablename__ = "api_keys"
 
     id = Column(Integer, primary_key=True, index=True)
-    organization_id = Column(
-        Integer, ForeignKey("organizations.id"), nullable=False
-    )
+    organization_id = Column(Integer, ForeignKey("organizations.id"), nullable=False)
     name = Column(String(100), nullable=False)
     key_hash = Column(String(255), nullable=False, unique=True, index=True)
     is_active = Column(Boolean, default=True, index=True)

@@ -32,12 +32,7 @@ class User(Base):
         back_populates="owner",
         foreign_keys="Organization.owner_id",
     )
-    org_memberships = relationship(
-        "OrganizationMember", back_populates="user"
-    )
+    org_memberships = relationship("OrganizationMember", back_populates="user")
 
     def __repr__(self):
-        return (
-            f"<User(id={self.id}, username={self.username}, "
-            f"email={self.email})>"
-        )
+        return f"<User(id={self.id}, username={self.username}, " f"email={self.email})>"

@@ -30,9 +30,7 @@ class Organization(Base):
         back_populates="organizations",
         foreign_keys=[owner_id],
     )
-    members = relationship(
-        "OrganizationMember", back_populates="organization"
-    )
+    members = relationship("OrganizationMember", back_populates="organization")
     api_keys = relationship("ApiKey", back_populates="organization")
 
     def __repr__(self):

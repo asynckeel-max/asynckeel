@@ -25,49 +25,29 @@ class ApiKeyRepository:
         return api_key
 
     @staticmethod
-    def get_api_key_by_id(
-        db: Session, api_key_id: int
-    ) -> ApiKey | None:
+    def get_api_key_by_id(db: Session, api_key_id: int) -> ApiKey | None:
         """Get API key by ID"""
-        return (
-            db.query(ApiKey)
-            .filter(ApiKey.id == api_key_id)
-            .first()
-        )
+        return db.query(ApiKey).filter(ApiKey.id == api_key_id).first()
 
     @staticmethod
-    def get_api_key_by_hash(
-        db: Session, key_hash: str
-    ) -> ApiKey | None:
+    def get_api_key_by_hash(db: Session, key_hash: str) -> ApiKey | None:
         """Get API key by hash"""
-        return (
-            db.query(ApiKey)
-            .filter(ApiKey.key_hash == key_hash)
-            .first()
-        )
+        return db.query(ApiKey).filter(ApiKey.key_hash == key_hash).first()
 
     @staticmethod
-    def get_organization_api_keys(
-        db: Session, organization_id: int
-    ) -> list[ApiKey]:
+    def get_organization_api_keys(db: Session, organization_id: int) -> list[ApiKey]:
         """Get all API keys for an organization"""
-        return (
-            db.query(ApiKey)
-            .filter(ApiKey.organization_id == organization_id)
-            .all()
-        )
+        return db.query(ApiKey).filter(ApiKey.organization_id == organization_id).all()
 
     @staticmethod
     def update_api_key(
-        db: Session, api_key_id: int, name: str | None = None,
-        is_active: bool | None = None
+        db: Session,
+        api_key_id: int,
+        name: str | None = None,
+        is_active: bool | None = None,
     ) -> ApiKey | None:
         """Update API key"""
-        api_key = (
-            db.query(ApiKey)
-            .filter(ApiKey.id == api_key_id)
-            .first()
-        )
+        api_key = db.query(ApiKey).filter(ApiKey.id == api_key_id).first()
         if not api_key:
             return None
         if name:
@@ -81,11 +61,7 @@ class ApiKeyRepository:
     @staticmethod
     def delete_api_key(db: Session, api_key_id: int) -> bool:
         """Delete API key"""
-        api_key = (
-            db.query(ApiKey)
-            .filter(ApiKey.id == api_key_id)
-            .first()
-        )
+        api_key = db.query(ApiKey).filter(ApiKey.id == api_key_id).first()
         if not api_key:
             return False
         db.delete(api_key)
@@ -97,11 +73,7 @@ class ApiKeyRepository:
         """Mark API key as used"""
         from datetime import datetime
 
-        api_key = (
-            db.query(ApiKey)
-            .filter(ApiKey.id == api_key_id)
-            .first()
-        )
+        api_key = db.query(ApiKey).filter(ApiKey.id == api_key_id).first()
         if not api_key:
             return None
         api_key.last_used_at = datetime.utcnow()

@@ -1,4 +1,8 @@
-from app.schemas.user import UserCreate, UserResponse, UserUpdate
+from app.schemas.api_key import (
+    ApiKeyCreate,
+    ApiKeyCreateResponse,
+    ApiKeyResponse,
+)
 from app.schemas.auth import (
     LoginRequest,
     LoginResponse,
@@ -14,11 +18,7 @@ from app.schemas.organization_member import (
     OrganizationMemberResponse,
     OrganizationMemberUpdate,
 )
-from app.schemas.api_key import (
-    ApiKeyCreate,
-    ApiKeyCreateResponse,
-    ApiKeyResponse,
-)
+from app.schemas.user import UserCreate, UserResponse, UserUpdate
 
 __all__ = [
     "UserCreate",
