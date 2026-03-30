@@ -35,7 +35,9 @@ class TokenData(BaseModel):
     username: Optional[str] = None
 
 
-def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
+def create_access_token(
+    data: dict, expires_delta: Optional[timedelta] = None
+):
     """Create JWT access token"""
     from jose import jwt
 
@@ -43,7 +45,9 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
     if expires_delta:
         expire = datetime.utcnow() + expires_delta
     else:
-        expire = datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+        expire = datetime.utcnow() + timedelta(
+            minutes=ACCESS_TOKEN_EXPIRE_MINUTES
+        )
     to_encode.update({"exp": expire})
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
@@ -51,11 +55,16 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
 
 def decode_token(token: str):
     """Decode JWT token"""
-    from jose import JWTError, jwt
+    from jose import jwt, JWTError
 
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         username: str = payload.get("sub")
+        if username is None:
+            return None
+        return TokenData(username=username)
+    except JWTError:
+        return None
 
 
 def generate_api_key() -> str:
@@ -67,16 +76,9 @@ def generate_api_key() -> str:
 
 def hash_api_key(api_key: str) -> str:
     """Hash an API key"""
-    import hashlib
-
     return hashlib.sha256(api_key.encode()).hexdigest()
 
 
 def verify_api_key(plain_key: str, hashed_key: str) -> bool:
     """Verify an API key against a hash"""
     return hash_api_key(plain_key) == hashed_key
-        if username is None:
-            return None
-        return TokenData(username=username)
-    except JWTError:
-        return None
