@@ -56,6 +56,25 @@ def decode_token(token: str):
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         username: str = payload.get("sub")
+
+
+def generate_api_key() -> str:
+    """Generate a random API key"""
+    import secrets
+
+    return secrets.token_urlsafe(32)
+
+
+def hash_api_key(api_key: str) -> str:
+    """Hash an API key"""
+    import hashlib
+
+    return hashlib.sha256(api_key.encode()).hexdigest()
+
+
+def verify_api_key(plain_key: str, hashed_key: str) -> bool:
+    """Verify an API key against a hash"""
+    return hash_api_key(plain_key) == hashed_key
         if username is None:
             return None
         return TokenData(username=username)
