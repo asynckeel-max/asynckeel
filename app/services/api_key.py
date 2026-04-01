@@ -1,3 +1,4 @@
+import hashlib
 from datetime import datetime, timedelta
 
 from sqlalchemy.orm import Session
@@ -5,6 +6,10 @@ from sqlalchemy.orm import Session
 from app.core.exceptions import (
     NotFoundException,
     UnauthorizedException,
+)
+from app.core.security import (
+    generate_api_key,
+    hash_api_key,
 )
 from app.models.organization_member import RoleEnum
 from app.repositories.api_key import ApiKeyRepository
