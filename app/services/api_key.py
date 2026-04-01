@@ -31,16 +31,12 @@ class ApiKeyService:
     ):
         """Create a new API key (only admin/owner can create)"""
         # Check if user is admin or owner
-        member = OrganizationMemberRepository.get_member(
-            db, org_id, user_id
-        )
+        member = OrganizationMemberRepository.get_member(db, org_id, user_id)
         if not member or member.role not in [
             RoleEnum.OWNER,
             RoleEnum.ADMIN,
         ]:
-            raise UnauthorizedException(
-                "Only owner or admin can create API keys"
-            )
+            raise UnauthorizedException("Only owner or admin can create API keys")
 
         # Generate API key
         plain_key = generate_api_key()
@@ -66,16 +62,12 @@ class ApiKeyService:
     def get_api_key(db: Session, org_id: int, user_id: int, key_id: int):
         """Get API key details (only admin/owner can view)"""
         # Check if user is admin or owner
-        member = OrganizationMemberRepository.get_member(
-            db, org_id, user_id
-        )
+        member = OrganizationMemberRepository.get_member(db, org_id, user_id)
         if not member or member.role not in [
             RoleEnum.OWNER,
             RoleEnum.ADMIN,
         ]:
-            raise UnauthorizedException(
-                "Only owner or admin can view API keys"
-            )
+            raise UnauthorizedException("Only owner or admin can view API keys")
 
         api_key = ApiKeyRepository.get_api_key_by_id(db, key_id)
         if not api_key or api_key.organization_id != org_id:
@@ -87,41 +79,29 @@ class ApiKeyService:
     def list_api_keys(db: Session, org_id: int, user_id: int):
         """List all API keys for organization"""
         # Check if user is member
-        member = OrganizationMemberRepository.get_member(
-            db, org_id, user_id
-        )
+        member = OrganizationMemberRepository.get_member(db, org_id, user_id)
         if not member:
-            raise UnauthorizedException(
-                "User is not a member of this organization"
-            )
+            raise UnauthorizedException("User is not a member of this organization")
 
         return ApiKeyRepository.get_organization_api_keys(db, org_id)
 
     @staticmethod
-    def revoke_api_key(
-        db: Session, org_id: int, user_id: int, key_id: int
-    ):
+    def revoke_api_key(db: Session, org_id: int, user_id: int, key_id: int):
         """Revoke API key (only admin/owner can revoke)"""
         # Check if user is admin or owner
-        member = OrganizationMemberRepository.get_member(
-            db, org_id, user_id
-        )
+        member = OrganizationMemberRepository.get_member(db, org_id, user_id)
         if not member or member.role not in [
             RoleEnum.OWNER,
             RoleEnum.ADMIN,
         ]:
-            raise UnauthorizedException(
-                "Only owner or admin can revoke API keys"
-            )
+            raise UnauthorizedException("Only owner or admin can revoke API keys")
 
         api_key = ApiKeyRepository.get_api_key_by_id(db, key_id)
         if not api_key or api_key.organization_id != org_id:
             raise NotFoundException("API key not found")
 
         # Deactivate key
-        return ApiKeyRepository.update_api_key(
-            db, key_id, is_active=False
-        )
+        return ApiKeyRepository.update_api_key(db, key_id, is_active=False)
 
     @staticmethod
     def verify_and_use_api_key(db: Session, plain_key: str):
