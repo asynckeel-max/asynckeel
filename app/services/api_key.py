@@ -1,4 +1,3 @@
-import hashlib
 from datetime import datetime, timedelta
 
 from sqlalchemy.orm import Session
