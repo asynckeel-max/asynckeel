@@ -1,7 +1,8 @@
 from fastapi import Depends, HTTPException, status
-from fastapi.security import HTTPBearer, HTTPAuthCredentials
+from fastapi.security import HTTPBearer
 from jose import JWTError
 from sqlalchemy.orm import Session
+from starlette.requests import Request
 
 from app.core.security import decode_token
 from app.db.session import SessionLocal
@@ -21,16 +22,25 @@ def get_db() -> Session:
 
 
 async def get_current_user(
-    credentials: HTTPAuthCredentials = Depends(security),
+    request: Request,
     db: Session = Depends(get_db),
 ) -> User:
     """Get current authenticated user"""
-    token = credentials.credentials
+    auth_header = request.headers.get("Authorization")
+    if not auth_header or not auth_header.startswith("Bearer "):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Could not validate credentials",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+
+    token = auth_header.split("Bearer ")[1]
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",
         headers={"WWW-Authenticate": "Bearer"},
     )
+
     try:
         token_data = decode_token(token)
         if token_data is None:
