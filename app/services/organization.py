@@ -58,7 +58,7 @@ class OrganizationService:
         db: Session, org_id: int, user_id: int, org_data: OrganizationUpdate
     ):
         """Update organization (only owner can update)"""
-        org = OrganizationService.get_organization(db, org_id)
+        OrganizationService.get_organization(db, org_id)
 
         # Check if user is owner
         member = OrganizationMemberRepository.get_member(
@@ -81,7 +81,7 @@ class OrganizationService:
     @staticmethod
     def delete_organization(db: Session, org_id: int, user_id: int):
         """Delete organization (only owner can delete)"""
-        org = OrganizationService.get_organization(db, org_id)
+        OrganizationService.get_organization(db, org_id)
 
         # Check if user is owner
         member = OrganizationMemberRepository.get_member(
