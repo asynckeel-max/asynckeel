@@ -1,33 +1,56 @@
-# Project Overview
-Asynckeel is a modern asynchronous web framework designed for building scalable and efficient web applications. It leverages the power of asynchronous programming to handle multiple connections concurrently without blocking the main execution thread.
+# AsyncKeel - Enterprise SaaS Platform Builder
 
-# Features
-- **High Performance:** Built on top of an efficient event loop that provides non-blocking I/O operations.
-- **Easy to Use:** Intuitive API that allows developers to quickly build applications without excessive boilerplate.
-- **Extensible:** Supports middleware architecture for easy scalability and maintainability.
-- **Built-in Support for WebSockets:** Easily implement real-time features in applications.
+**Status:** This repository contains documentation and examples. Production code is in the private repository.
 
-# Quick Start
-1. **Installation**: Install Asynckeel using pip:
-   ```bash
-   pip install asynckeel
-   ```
+## 📚 Documentation
 
-2. **Create a new project**:
-   ```bash
-   asynckeel new myproject
-   cd myproject
-   ```
+- [Getting Started](docs/getting-started.md) - Installation & setup guide
+- [API Reference](docs/api-reference.md) - Complete API documentation
+- [Architecture](docs/architecture.md) - System architecture & design
 
-3. **Run the development server**:
-   ```bash
-   asynckeel run
-   ```
-4. **Access your application**: Open your browser and go to `http://localhost:8000`.
+## 🚀 Quick Start
 
-# Technology Stack
-- **Python 3.8+**: The modern programming language used for development.
-- **Asyncio**: Python's built-in library for writing concurrent code using the async/await syntax.
-- **FastAPI**: A modern web framework used for building APIs quickly and with minimal code.
+### Prerequisites
+- Python 3.10+
+- PostgreSQL 12+
+- pip or poetry
 
-For more detailed documentation, please refer to the [official documentation](https://example.com/docs).
+### Installation
+
+```bash
+git clone https://github.com/asynckeel-max/asynckeel.git
+cd asynckeel
+pip install -r requirements.txt
+```
+
+## ▶️ Running the Application
+
+### Development Mode
+
+```bash
+uvicorn app.main:app --reload
+```
+
+- API: http://localhost:8000
+- Swagger UI: http://localhost:8000/docs
+- ReDoc: http://localhost:8000/redoc
+
+## 📖 Examples
+
+See the examples/ directory for usage examples:
+
+- [Authentication](examples/authentication.py)
+- [Organizations](examples/organizations.py)
+
+## 🔐 Security
+
+- JWT-based authentication
+- Password hashing with bcrypt
+- CORS protection
+- API key management
+
+## 📝 License
+MIT License - see [LICENSE](License.md) file for details
+
+## 🤝 Contributing
+See [CONTRIBUTING.md](Contributing.md) for contribution guidelines.
