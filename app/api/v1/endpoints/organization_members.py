@@ -76,6 +76,4 @@ def remove_member(
     db: Session = Depends(get_db),
 ):
     """Remove member from organization (admin/owner only)"""
-    OrganizationMemberService.remove_member(
-        db, org_id, user_id, current_user.id
-    )
+    OrganizationMemberService.remove_member(db, org_id, user_id, current_user.id)

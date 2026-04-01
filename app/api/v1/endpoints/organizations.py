@@ -24,9 +24,7 @@ def create_organization(
     db: Session = Depends(get_db),
 ):
     """Create a new organization"""
-    return OrganizationService.create_organization(
-        db, current_user.id, org_data
-    )
+    return OrganizationService.create_organization(db, current_user.id, org_data)
 
 
 @router.get("", response_model=list[OrganizationResponse])

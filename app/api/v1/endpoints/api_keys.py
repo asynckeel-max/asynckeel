@@ -28,9 +28,7 @@ def create_api_key(
     db: Session = Depends(get_db),
 ):
     """Create a new API key (admin/owner only)"""
-    result = ApiKeyService.create_api_key(
-        db, org_id, current_user.id, api_key_data
-    )
+    result = ApiKeyService.create_api_key(db, org_id, current_user.id, api_key_data)
     api_key = result["api_key"]
     plain_key = result["plain_key"]
 
