@@ -1,51 +1,120 @@
-# Getting Started Guide
+# Getting Started with AsyncKeel
 
 ## Installation
 
-To get started with the project, follow these installation steps:
+### Prerequisites
 
-1. **Clone the Repository**  
-   Use the following command to clone the repository:
-   ```bash
-   git clone https://github.com/asynckeel-max/asynckeel.git
-   cd asynckeel
-   ```  
+- Python 3.10 or higher
+- PostgreSQL 12 or higher
+- pip or poetry package manager
 
-2. **Install Dependencies**  
-   Make sure you have Python and pip installed.
-   Then run:
-   ```bash
-   pip install -r requirements.txt
-   ```
+### Step 1: Clone Repository
 
-3. **Set Up Environment Variables**  
-   Create a `.env` file in the root directory and add your configuration variables:
-   ```
-   API_KEY=your_api_key
-   api_url=https://api.example.com
-   ```
-
-## First API Call
-
-After setting up the environment, you can make your first API call. Here’s a simple example:
-
-```python
-import requests
-import os
-
-api_url = os.getenv('api_url')
-headers = {'Authorization': f'Token {os.getenv('API_KEY')}' }
-
-response = requests.get(f'{api_url}/endpoint', headers=headers)
-
-if response.status_code == 200:
-    print('Success:', response.json())
-else:
-    print('Error:', response.status_code, response.text)
+```bash
+git clone https://github.com/asynckeel-max/asynckeel.git
+cd asynckeel
 ```
 
-This code initializes a GET request to the specified API endpoint after setting the necessary headers. Make sure to replace `/endpoint` with the actual endpoint you want to call.
+### Step 2: Create Virtual Environment
 
-## Conclusion
+```bash
+# Linux/macOS
+python3 -m venv venv
+source venv/bin/activate
 
-You’re now ready to start building your application with the API! Don't forget to check the API documentation for more details on available endpoints and usage guidelines.
+# Windows
+python -m venv venv
+venv\Scripts\activate
+```
+
+### Step 3: Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+## Configuration
+
+Create a `.env` file in the root directory:
+
+```env
+# Database
+DATABASE_URL=postgresql://user:password@localhost/asynckeel
+
+# JWT
+SECRET_KEY=your-secret-key-change-in-production
+ALGORITHM=HS256
+ACCESS_TOKEN_EXPIRE_MINUTES=30
+
+# Server
+DEBUG=True
+HOST=0.0.0.0
+PORT=8000
+
+# CORS
+CORS_ORIGINS=["http://localhost:3000","http://localhost:8000"]
+```
+## Running the Application
+
+### Development Mode
+```bash
+uvicorn app.main:app --reload
+```
+- API: http://localhost:8000
+- Swagger UI: http://localhost:8000/docs
+- ReDoc: http://localhost:8000/redoc
+
+### Production Mode
+```bash
+uvicorn app.main:app --host 0.0.0.0 --port 8000 --workers 4
+```
+## Database Setup
+### Create Database
+```bash
+createdb asynckeel
+```
+### Run Migrations
+```bash
+alembic upgrade head
+```
+## Verification
+Test the installation:
+
+```bash
+# Health check
+curl http://localhost:8000/health
+
+# Should return:
+# {"status":"ok"}
+```
+## Next Steps
+
+- Read the [API Reference](api-reference.md)
+- Check [Architecture](architecture.md) documentation
+- Review [Examples](../examples/)
+
+## Troubleshooting
+
+### Database Connection Error
+
+```bash
+Error: could not connect to server
+```
+
+**Solution:** Check PostgreSQL is running and DATABASE_URL is correct
+
+### Port Already in Use
+
+```bash
+Address already in use
+```
+
+**Solution:** Change port in .env or kill process on port 8000
+
+### Import Errors
+
+```bash
+ModuleNotFoundError
+```
+
+**Solution:** Ensure virtual environment is activated and dependencies installed
