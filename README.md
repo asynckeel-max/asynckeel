@@ -50,7 +50,7 @@ See the examples/ directory for usage examples:
 - API key management
 
 ## 📝 License
-MIT License - see [LICENSE](License.md) file for details
+MIT License - see [LICENSE](https://github.com/asynckeel-max/asynckeel/blob/main/LICENSE) file for details
 
 ## 🤝 Contributing
-See [CONTRIBUTING.md](Contributing.md) for contribution guidelines.
+See [CONTRIBUTING.md](https://github.com/asynckeel-max/asynckeel/blob/main/CONTRIBUTING.md) for contribution guidelines.
